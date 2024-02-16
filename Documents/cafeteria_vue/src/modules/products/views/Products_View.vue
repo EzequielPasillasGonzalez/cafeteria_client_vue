@@ -10,6 +10,7 @@
             <p class="card-text"> {{ product.category.nombre }} </p>
             <p class="card-text"> {{ product.descripcion }} </p>            
             <p class="card-text"> $ {{ product.price }} </p>
+            <p class="card-text"> Cantidad disponible: {{ product.cantidad }} </p>
             <p class="card-text" :class="{ 'text-success': !product.available, 'text-danger': product.available }">
                 {{ !product.available ? 'Disponible' : 'No disponible' }}
             </p>

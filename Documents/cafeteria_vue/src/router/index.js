@@ -34,7 +34,7 @@ const routes = [
   {
     path: '/shopping',
     name: 'shopping',    
-    component: () => import(/* webpackChunckName: "shopping" */ '../modules/products/views/shoppingList_View.vue'),            
+    component: () => import(/* webpackChunckName: "shopping" */ '../modules/products/layouts/Shop_Layout.vue'),            
   },
 ]
 

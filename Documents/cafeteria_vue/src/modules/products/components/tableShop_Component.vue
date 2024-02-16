@@ -1,44 +1,79 @@
 <template>
-    <div class="container">
+    <div  v-if="order && order.length > 0"  class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1>Orden de pedido:</h1>                
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Nombre del produto</th>
+                        <th scope="col">Precio $</th>                
+                      </tr>
+                    </thead>
+                    <tbody>              
+                        <trTable v-for="product in order" :key="product.id" :order="product"/>              
+                    </tbody>
+                </table>
 
-        {{ order }}
-        <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nombre del produto</th>
-                <th scope="col">Precio $</th>                
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <div class="p-2 bd-highlight">                        
+                        <a class="btn btn-secondary" @click="$emit('pay', order)">Pagar</a>
+                    </div>
+                </div>
                 
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-             
-              </tr>
-              <tr>
-                <th scope="row">3</th>                
-                <td>@twitter</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-        </table>
+
+            </div>
+        </div>        
+    </div>
+
+    {{ usuario.order }}
+
+    <div v-if="usuario && usuario.order " class="container">
+        <div class="card">
+            <div class="card-body">
+                <h1>Pedidos creados:</h1>                
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">#ID</th>
+                        <th scope="col">Nombre del produto</th>
+                        <th scope="col">Precio $</th>                
+                      </tr>
+                    </thead>
+                    <tbody>              
+                        <trTable v-for="product in usuario.order" :key="product.id" :order="product"/>              
+                    </tbody>
+                </table>
+
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <div class="p-2 bd-highlight">
+                        <a class="btn btn-secondary" @click="$emit('pay', order)">Pagar</a>
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>        
     </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import { defineAsyncComponent } from 'vue'
+
 export default {
+
+    components: {
+        trTable : defineAsyncComponent(() => import('../components/trTable_Componente.vue')),        
+    },
+
     computed: {        
         ...mapState('orderStore', {
             order: 'order'
+        }),
+        ...mapState('authStore', {
+            usuario: 'usuario'
         }),
     },
     methods: {
@@ -46,20 +81,23 @@ export default {
             if(this.order.length === 0){
                 this.setItemsLocalStorage()
             }
-        },
+        },        
 
         ...mapActions("orderStore", [
             "setItemsLocalStorage"
         ]
         ),
     },
-    created(){
-        console.log('j');
+    created(){        
         this.getOrder()
     }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
+.container{
+    margin-top: 3%;
+}
 
 </style>

@@ -27,11 +27,17 @@ export const getLogin = async ( { commit },  user) => {
 
         objUsuario.isLoading = false
 
+        objUsuario.role = usuario.role
+
+        objUsuario.order = usuario.order
+
 
         localStorage.setItem('token', token) // Poner el token de autorizacion en el local storage
         localStorage.setItem('nombre', usuario.nombre)
         localStorage.setItem('correo', usuario.correo)
         localStorage.setItem('uID', usuario.uID)
+        localStorage.setItem('role', usuario.role)
+        localStorage.setItem('orderList', usuario.order)
 
         commit('setUsuario', {...objUsuario}) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
 
@@ -106,11 +112,17 @@ export const handleCredentialResponse = async ( { commit }, response) => {
 
         objUsuario.token = token
 
+        objUsuario.role = usuario.role
+
+        objUsuario.order = usuario.order
+
         localStorage.setItem('token', token) // Poner el token de autorizacion en el local storage
 
         localStorage.setItem('nombre', usuario.nombre)
         localStorage.setItem('correo', usuario.correo)
         localStorage.setItem('uID', usuario.uID)
+        localStorage.setItem('role', usuario.role)
+        localStorage.setItem('orderList', usuario.order)
 
 
         commit('setUsuario', {...objUsuario}) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
@@ -135,6 +147,10 @@ export const setUserStorage = ({commit}, ) => {
     objUsuario.token = localStorage.getItem('token')
 
     objUsuario.uID = localStorage.getItem('uID')
+
+    objUsuario.role = localStorage.getItem('role')
+
+    objUsuario.order = localStorage.getItem('orderList')
 
     if(objUsuario.token == null){
         objUsuario.isLoading = true
@@ -161,6 +177,10 @@ export const closeSession = ({commit}, ) => {
 
     objUsuario.uID = null
 
+    objUsuario.order = null
+
+    objUsuario.role = null
+
     objUsuario.isLoading = true
 
     localStorage.removeItem("nombre");
@@ -168,9 +188,36 @@ export const closeSession = ({commit}, ) => {
     localStorage.removeItem("correo");
     localStorage.removeItem("token");
     localStorage.removeItem("uID");
+    localStorage.removeItem("role");
+    localStorage.removeItem("order");
 
 
     commit('setUsuario', {...objUsuario})
 
+
+}
+
+export const updateOrderUSer = async ( { commit },  orderID) => { 
+        
+    try {
+
+        const uID = localStorage.getItem('uID')
+        const role = localStorage.getItem('role')
+
+        
+        await authApi.put(`/api/user/${uID}`, {role: role, order: orderID}) //? Le hace un peticion get al api
+
+        localStorage.removeItem('productList')
+
+        commit('setUsuarioOrder', orderID) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
+
+
+        return true
+
+    } catch (error) {
+        
+        return error
+
+    }
 
 }

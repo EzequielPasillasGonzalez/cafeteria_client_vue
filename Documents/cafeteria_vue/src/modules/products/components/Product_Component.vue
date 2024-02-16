@@ -7,6 +7,7 @@
             <h5 class="card-title">{{ product.nombre }}</h5>
             <p class="card-text"> {{ product.category.nombre }} </p>
             <p class="card-text"> $ {{ product.price }} </p>
+            <p class="card-text"> Cantidad disponible: {{ product.cantidad }} </p>
             
             <div class="container">
 

@@ -67,7 +67,7 @@ export default {
 
                     Swal.fire('Se cerró la sesión con éxito', '', 'success')
 
-                    this.$router.push({name: 'home'})
+                    this.$router.push({ name: "products" });
                 }
             });
         },
@@ -85,6 +85,12 @@ export default {
     },
     created(){
         this.setUserStorage()
+    },
+    watch: {
+        isLoading(){ 
+             //? Actualiza el view cuando el usuario pulsa otro producto
+            this.setUserStorage()
+        }
     }
 
 
