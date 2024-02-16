@@ -71,6 +71,10 @@ export const makeOrder = async ({commit}, order) => {
             }
         };
 
+        const resp = await cafeteriaApi.patch("/api/products/list", {order}, config)
+
+        console.log(resp);
+
         
 
 
@@ -102,21 +106,21 @@ export const makeOrder = async ({commit}, order) => {
     }
 }
 
-async function processOrder(order, index) {
-    if (index >= order.length) {
-        // Todas las solicitudes han sido procesadas
-        return;
-        }
+// async function processOrder(order, index) {
+//     if (index >= order.length) {
+//         // Todas las solicitudes han sido procesadas
+//         return;
+//         }
 
-        const product = order[index];
-        product.cantidad -= 1;
-        const config = {
-            headers: {
-                'awt_token': localStorage.getItem('token')
-            }
-        };
+//         const product = order[index];
+//         product.cantidad -= 1;
+//         const config = {
+//             headers: {
+//                 'awt_token': localStorage.getItem('token')
+//             }
+//         };
 
         
-        // Llamar recursivamente a la función para procesar el siguiente producto
-        await processOrder(order, index + 1);
-    }
+//         // Llamar recursivamente a la función para procesar el siguiente producto
+//         await processOrder(order, index + 1);
+//     }
