@@ -1,7 +1,7 @@
 <template>
 
     
-    <div class="card p-3 border bg-light ml-5" style="width: 18rem;">
+    <div v-if="product.cantidad > 0" class="card p-3 border bg-light ml-5" style="width: 18rem;">
         <img :src="product.img" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{ product.nombre }}</h5>

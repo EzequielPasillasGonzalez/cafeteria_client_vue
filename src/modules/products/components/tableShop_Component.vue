@@ -27,7 +27,7 @@
         </div>        
     </div>
 
-    {{ usuario.order }}
+    <!-- {{ usuario.order }}
 
     <div v-if="usuario && usuario.order " class="container">
         <div class="card">
@@ -55,7 +55,7 @@
 
             </div>
         </div>        
-    </div>
+    </div> -->
 </template>
 
 <script>

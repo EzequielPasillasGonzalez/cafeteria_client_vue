@@ -3,13 +3,6 @@
 
       <NavBar/>
 
-        
-        
-        
-
-        
-
-
         <div class="row mt-5">
 
           <div class="container">

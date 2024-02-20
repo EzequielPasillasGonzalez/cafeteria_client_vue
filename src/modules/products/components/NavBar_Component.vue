@@ -11,7 +11,11 @@
 
         
 
-        <div class="d-flex">            
+        <div class="d-flex">                        
+
+            <button class="btn btn-outline-info mx-2" @click="goToStore">
+                <i class="fas fa-store"></i>
+            </button>
 
             <button class="btn btn-outline-info mx-2" @click="goToShopping">
                 <i class="fas fa-shopping-cart"></i>
@@ -50,6 +54,9 @@ export default {
         },
         goToShopping(){
             this.$router.push({name: 'shopping'}) //? Igual de como esta en el router que se exporta del modules
+        },
+        goToStore(){
+            this.$router.push({name: 'products'})  //? Igual de como esta en el router que se exporta del modules
         },
         gotToCloseSign(){
 

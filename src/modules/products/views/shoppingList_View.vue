@@ -48,9 +48,11 @@ export default {
             try {                  
                 const resp = await this.makeOrder(order)
 
-                //const data = await this.updateOrderUSer(resp)
+                const data = await this.updateOrderUSer(resp)
 
-                Swal.fire("¡Pedido creado con éxito!", "", "success");                
+                Swal.fire("¡Pedido creado con éxito!", "", "success");  
+                
+                this.$router.push({name: 'products'})
                 
             } catch(error) {
             

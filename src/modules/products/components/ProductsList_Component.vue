@@ -43,7 +43,8 @@ export default {
   },
   computed: {
     ...mapGetters('products', [
-      'getProductByTerm',      
+      'getProductByTerm', 
+      'loadProducts'     
     ]),
     ...mapState('orderStore', {
         isLoading: 'isLoading'
@@ -99,7 +100,10 @@ export default {
     showProduct(newValue) {
       // Este código se ejecutará cuando cambie la propiedad 'showProduct'
       console.log('showProduct ha cambiado:', newValue);
-    }
+    },
+    mounted() {
+      this.loadProducts()
+    },
   }
 }
 </script>

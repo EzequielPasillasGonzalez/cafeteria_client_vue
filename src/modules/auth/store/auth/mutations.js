@@ -21,9 +21,7 @@ export const setUsuarioOrder = (state, order) => {
   
   state.isLoading = true
   
-  state.usuario = {
-    order: order,
-  };
+  state.usuario.order.push(order)
 
   
   state.isLoading = false

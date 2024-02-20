@@ -71,35 +71,35 @@ export const makeOrder = async ({commit}, order) => {
             }
         };
 
-        const resp = await cafeteriaApi.patch("/api/products/list", {order}, config)
-
-        console.log(resp);
-
         
 
+        const respuestaCafeteriaApi = await cafeteriaApi.patch("/api/products/list", {order: order}, config)        
 
-        //await processOrder(order, 0);        
         
-       // const resp = await cafeteriaOrderApi.post("/order.json", order) //? Le hace un peticion get al api    
-
-        // order.forEach(product => {
-        //     await cafeteriaApi.patch(`/api/products/${product.id}`, {
-        //         category: product.category.nombre,
-        //         cantidad: product.cantidad
-        //     }, config);
-    
-        // });
-
+        
+        const respuestaCafeteriaOrderApi = await cafeteriaOrderApi.post("/order.json", order) //? Le hace un peticion get al api    
+        
 
         // extraer Id
-        // const { data } = resp
-        // const idOrder = data.name        
+        const { data } = respuestaCafeteriaOrderApi
+        const idOrder = data.name        
 
-        // commit('setItemOrderListLocalStorage', order)
+
+        await cafeteriaApi.post("/api/email", 
+        {
+                to: localStorage.getItem('correo'),                 
+                subject: "Pedido realizado",
+                message: `El Id de pedido es ${idOrder}`
+            }
+        , config)
+
+        localStorage.removeItem('productList')
+
+        commit('cleanOrderList')
 
         
 
-        // return idOrder
+        return idOrder
 
     } catch(error) {
         return error

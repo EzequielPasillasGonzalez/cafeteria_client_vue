@@ -8,6 +8,6 @@ import './styles/styles.scss'
 
 createApp(App)
     .use(store)
-    .use(vue3GoogleLogin, { clientId: '964193955907-n5idd56328ouham4h96liq95afhs3frq.apps.googleusercontent.com' })
+    .use(vue3GoogleLogin, { clientId: process.env.VUE_APP_GOOGLE_CLIENT_ID })
     .use(router)
     .mount('#app')
