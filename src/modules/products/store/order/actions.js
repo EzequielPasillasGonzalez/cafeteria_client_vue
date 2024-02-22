@@ -106,21 +106,28 @@ export const makeOrder = async ({commit}, order) => {
     }
 }
 
-// async function processOrder(order, index) {
-//     if (index >= order.length) {
-//         // Todas las solicitudes han sido procesadas
-//         return;
-//         }
-
-//         const product = order[index];
-//         product.cantidad -= 1;
-//         const config = {
-//             headers: {
-//                 'awt_token': localStorage.getItem('token')
-//             }
-//         };
-
+export const loadOrder = async ({commit}, orderList) => {
+    try {
+        // Dividir el string por comas
+        var lista = orderList.split(',');
+        let pedidosHechos = []
         
-//         // Llamar recursivamente a la función para procesar el siguiente producto
-//         await processOrder(order, index + 1);
-//     }
+        for (let index = 0; index < lista.length; index++) {
+            const element = lista[index];            
+            const {data} = await cafeteriaOrderApi.get(`/order/${element}.json`, )
+            
+            if(data !== null){
+                pedidosHechos.push(data)
+            }
+
+        }
+        
+        
+
+        return pedidosHechos
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+}

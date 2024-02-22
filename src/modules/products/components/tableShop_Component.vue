@@ -27,9 +27,7 @@
         </div>        
     </div>
 
-    <!-- {{ usuario.order }}
-
-    <div v-if="usuario && usuario.order " class="container">
+    <div v-if="pedidosHechos != [] " class="container">
         <div class="card">
             <div class="card-body">
                 <h1>Pedidos creados:</h1>                
@@ -42,20 +40,15 @@
                       </tr>
                     </thead>
                     <tbody>              
-                        <trTable v-for="product in usuario.order" :key="product.id" :order="product"/>              
+                        <pedidosHechos v-for="product in pedidosHechos" :key="product.id" :order="product"/>              
                     </tbody>
                 </table>
 
-                <div class="d-flex flex-row-reverse bd-highlight">
-                    <div class="p-2 bd-highlight">
-                        <a class="btn btn-secondary" @click="$emit('pay', order)">Pagar</a>
-                    </div>
-                </div>
                 
 
             </div>
         </div>        
-    </div> -->
+    </div>
 </template>
 
 <script>
@@ -66,6 +59,12 @@ export default {
 
     components: {
         trTable : defineAsyncComponent(() => import('../components/trTable_Componente.vue')),        
+        pedidosHechos : defineAsyncComponent(() => import('../components/pedidosHechos_trTable_Componente.vue')),        
+    },
+    data(){
+        return{
+            pedidosHechos: null
+        }
     },
 
     computed: {        
@@ -75,6 +74,7 @@ export default {
         ...mapState('authStore', {
             usuario: 'usuario'
         }),
+    
     },
     methods: {
         getOrder(){
@@ -84,12 +84,27 @@ export default {
         },        
 
         ...mapActions("orderStore", [
-            "setItemsLocalStorage"
+            "setItemsLocalStorage",
+            "loadOrder"
         ]
-        ),
+        ),      
+        
+        async getOrders(){
+            
+            if(this.usuario.order){
+                this.pedidosHechos = await this.loadOrder(this.usuario.order)
+            }
+
+            // for (let index = 0; index < this.pedidosHechos.length; index++) {
+            //     const element = this.pedidosHechos[index];
+            //     console.log(element);
+            // }
+            //console.log(this.pedidosHechos);
+        }
     },
     created(){        
-        this.getOrder()
+        this.getOrder(),
+        this.getOrders()
     }
 }
 </script>
