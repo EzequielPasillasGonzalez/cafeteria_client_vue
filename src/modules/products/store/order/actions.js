@@ -71,6 +71,17 @@ export const makeOrder = async ({commit}, order) => {
             }
         };
 
+        let pedido = []
+
+        order.forEach(element => {
+            pedido.push(element)
+        });
+
+        let pedidoDetallado = pedido.map(item => {
+            return `Producto: ${item.name}, Precio: ${item.precio}`;
+        });
+        
+
         
 
         const respuestaCafeteriaApi = await cafeteriaApi.patch("/api/products/list", {order: order}, config)        
@@ -87,10 +98,10 @@ export const makeOrder = async ({commit}, order) => {
 
         await cafeteriaApi.post("/api/email", 
         {
-                to: localStorage.getItem('correo'),                 
-                subject: "Pedido realizado",
-                message: `El Id de pedido es ${idOrder}`
-            }
+            to: localStorage.getItem('correo'),                 
+            subject: "Pedido realizado",
+            message: `Detalles del pedido:\n${pedidoDetallado.join('\n')}`
+        }
         , config)
 
         localStorage.removeItem('productList')

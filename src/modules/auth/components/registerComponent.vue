@@ -48,6 +48,19 @@
                             </div>
                         </div>
 
+                        <div class="mb-3 row">
+                            <label for="inputPassword" class="col-sm-2 col-form-label">Confirma tu contraseña</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="inputPassword" v-model="passwordConfirm"
+                                    autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="mb-3 row" v-if="!verifyPassword" style="color: red;">
+                            <p>Las contraseñas no son iguales</p>
+                        </div>
+
+
                         <button @click="register" class="btn btn-primary">Registrarse</button>
                     </form>
                 </div>
@@ -72,6 +85,7 @@ export default {
         return {
             correo: null,
             password: null,
+            passwordConfirm: null,
             nombre: null,
             user: Object,
         }
@@ -146,7 +160,12 @@ export default {
             }
         }
         
-    },    
+    },   
+    computed:{
+        verifyPassword(){
+            return this.password === this.passwordConfirm
+        }
+    } 
 
 }
 </script>
