@@ -24,6 +24,7 @@
         </div>
 
         
+        <Landing/>
     </div>
 </template>
 
@@ -42,6 +43,7 @@ export default {
   },
   components: {
     NavBar: defineAsyncComponent(() => import('@/modules/products/components/NavBar_Component.vue')),
+    Landing: defineAsyncComponent(() => import('@/views/Landing_Views.vue')),
   }
 }
 </script>
