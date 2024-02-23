@@ -11,10 +11,11 @@ export default {
             path: ':id',
             name: 'show-product',    
             component: () => import(/* webpackChunckName: "product-entry" */ '../views/Products_View.vue'),
-            props: (route) =>{ //? Se manda el id por los props para el Product-view
+            props: (route) =>{ //? Se manda el id por los props para el Product-view                
                 return {
                     id: route.params.id
-                }
+                    
+                }                
             }
         },        
     ]

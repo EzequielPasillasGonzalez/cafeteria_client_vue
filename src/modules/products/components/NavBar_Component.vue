@@ -27,7 +27,11 @@
                 </button>
             </template>
 
-            <template v-else>                
+            <template v-else>   
+                <button class="btn btn-outline-info mx-2" @click="gotToProfile">                
+                    <i class="fas fa-user-alt"></i>    
+                </button>  
+
                 <button class="btn btn-outline-info mx-2" @click="gotToCloseSign">                
                     <i :class="iconSignOut"></i>                            
                 </button>                
@@ -57,6 +61,9 @@ export default {
         },
         goToStore(){
             this.$router.push({name: 'products'})  //? Igual de como esta en el router que se exporta del modules
+        },
+        gotToProfile(){
+            this.$router.push({name: 'profile'})  //? Igual de como esta en el router que se exporta del modules
         },
         gotToCloseSign(){
 

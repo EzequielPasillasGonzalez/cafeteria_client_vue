@@ -15,6 +15,8 @@ export const getLogin = async ( { commit },  user) => {
 
         const { usuario, token } = data
 
+        console.log(usuario);
+
         let objUsuario = Object
 
         objUsuario.nombre = usuario.nombre
@@ -30,6 +32,8 @@ export const getLogin = async ( { commit },  user) => {
         objUsuario.role = usuario.role
 
         objUsuario.order = usuario.order
+
+        objUsuario.img = usuario.img
 
 
         localStorage.setItem('token', token) // Poner el token de autorizacion en el local storage
@@ -99,6 +103,7 @@ export const handleCredentialResponse = async ( { commit }, response) => {
         const { data } = await authApi.post("/api/auth/google", {id_token: id_token}) //? Le hace un peticion get al api
 
         const { usuario, token } = data
+        
 
         let objUsuario = Object
 
@@ -115,6 +120,8 @@ export const handleCredentialResponse = async ( { commit }, response) => {
         objUsuario.role = usuario.role
 
         objUsuario.order = usuario.order
+
+        objUsuario.img = usuario.img
 
         localStorage.setItem('token', token) // Poner el token de autorizacion en el local storage
 

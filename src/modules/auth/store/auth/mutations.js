@@ -10,7 +10,8 @@ export const setUsuario = (state, user) => {
           correo: user.correo,
           token: user.token,
           order: user.order,
-          role: user.role
+          role: user.role,
+          img: user.img
         };
 
         

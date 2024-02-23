@@ -17,5 +17,11 @@ export default {
                 }
             }
         },
+        {
+            path: '/profile',
+            name: 'profile',    
+            component: () => import(/* webpackChunckName: "profile" */ '../views/perfilView.vue'),
+
+        },
     ]
 }
