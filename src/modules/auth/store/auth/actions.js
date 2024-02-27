@@ -130,6 +130,7 @@ export const handleCredentialResponse = async ( { commit }, response) => {
         localStorage.setItem('uID', usuario.uID)
         localStorage.setItem('role', usuario.role)
         localStorage.setItem('orderList', usuario.order)
+        localStorage.setItem('img', usuario.img)
 
 
         commit('setUsuario', {...objUsuario}) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
@@ -158,6 +159,8 @@ export const setUserStorage = ({commit}, ) => {
     objUsuario.role = localStorage.getItem('role')
 
     objUsuario.order = localStorage.getItem('orderList')
+
+    objUsuario.img = localStorage.getItem('img')
 
     if(objUsuario.token == null){
         objUsuario.isLoading = true
@@ -226,5 +229,40 @@ export const updateOrderUSer = async ( { commit },  orderID) => {
         return error
 
     }
+
+}
+
+export const updateUSerAccount = async ( { commit },  newDataUser) => { 
+        
+    //try {
+
+        const uID = localStorage.getItem('uID')
+        const role = localStorage.getItem('role')
+        //! nos quedamos en el envio de datos en la action para cambiar los valores del usuario
+
+        const {correo, password, nombre, img} = newDataUser        
+        console.log(correo);
+        
+        console.log(nombre);
+        console.log(img);
+
+        if(password){
+            console.log(password);
+        }
+        
+        // await authApi.put(`/api/user/${uID}`, {role: role, order: orderID}) //? Le hace un peticion get al api
+
+        // localStorage.removeItem('productList')
+
+        //commit('setUsuarioOrder', orderID) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
+
+        
+        return true
+
+    // } catch (error) {
+        
+    //     return error
+
+    // }
 
 }

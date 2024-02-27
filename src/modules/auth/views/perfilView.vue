@@ -1,20 +1,16 @@
 <template>
-    <div>
-        {{ usuario }}
-    </div>
+    <ProfileComponent/>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import Swal from "sweetalert2";
+import ProfileComponent from '../components/profileComponent.vue';
+
+
 
 export default {
-    computed:{
-        ...mapState( 'authStore', {
-            usuario: 'usuario',
-            isLoading: 'isLoading'
-        }),
-    },
+    components:{
+        ProfileComponent
+    }    
 }
 </script>
 
