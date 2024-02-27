@@ -4,7 +4,8 @@
 
 export const setUsuario = (state, user) => {
     
-        state.usuario = {
+
+    state.usuario = {
           nombre: user.nombre,
           uID: user.uID,
           correo: user.correo,
@@ -12,7 +13,7 @@ export const setUsuario = (state, user) => {
           order: user.order,
           role: user.role,
           img: user.img
-        };
+    };
 
         
         state.isLoading = user.isLoading

@@ -191,6 +191,8 @@ export const closeSession = ({commit}, ) => {
 
     objUsuario.role = null
 
+    objUsuario.img = null
+
     objUsuario.isLoading = true
 
     localStorage.removeItem("nombre");
@@ -200,6 +202,7 @@ export const closeSession = ({commit}, ) => {
     localStorage.removeItem("uID");
     localStorage.removeItem("role");
     localStorage.removeItem("order");
+    localStorage.removeItem("img");
 
 
     commit('setUsuario', {...objUsuario})
@@ -234,35 +237,59 @@ export const updateOrderUSer = async ( { commit },  orderID) => {
 
 export const updateUSerAccount = async ( { commit },  newDataUser) => { 
         
-    //try {
+    try {
 
         const uID = localStorage.getItem('uID')
         const role = localStorage.getItem('role')
         //! nos quedamos en el envio de datos en la action para cambiar los valores del usuario
 
-        const {correo, password, nombre, img} = newDataUser        
-        console.log(correo);
+        const {correo, passwordOld, passwordNew, nombre, img} = newDataUser      
         
-        console.log(nombre);
-        console.log(img);
 
-        if(password){
-            console.log(password);
+
+        if(passwordOld){
+            const { data } = await authApi.put(`/api/user/${uID}`, 
+        {
+                role: role, 
+                correo: correo,
+                nombre: nombre,
+                passwordOld: passwordOld,
+                passwordNew: passwordNew
+            })
+
+            const {ok, body} = data            
+
+            commit('setUsuario', {...body})
+
+            return ok
         }
         
-        // await authApi.put(`/api/user/${uID}`, {role: role, order: orderID}) //? Le hace un peticion get al api
+        const {data} = await authApi.put(`/api/user/${uID}`, 
+    {
+            role: role, 
+            correo: correo,
+            nombre: nombre
+        })
 
-        // localStorage.removeItem('productList')
+        const {ok, body} = data        
 
-        //commit('setUsuarioOrder', orderID) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
+        localStorage.setItem('nombre', body.nombre)
+        localStorage.setItem('correo', body.correo)
+        localStorage.setItem('uID', body.uID)
+        localStorage.setItem('role', body.role)
+        localStorage.setItem('orderList', body.order)
+        localStorage.setItem('img', body.img)
+
+
+        commit('setUsuario', {...body}) //? Se llama la mutacion setUsuario para guardar la respuesta de la api desde la bd
 
         
-        return true
+        return ok
 
-    // } catch (error) {
+    } catch (error) {
         
-    //     return error
+        return error
 
-    // }
+    }
 
 }

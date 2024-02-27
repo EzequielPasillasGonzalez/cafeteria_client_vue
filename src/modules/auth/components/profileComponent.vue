@@ -85,6 +85,27 @@
                     </div>
 
 
+                    <img
+                        v-if="localImage"
+                        :src="localImage" 
+                        alt="Entry picture"
+                        class="rounded-circle mt-5">
+
+                    <div class="mt-3">
+                        <input type="file" @change="onSelectdImage"
+                        ref="imageSelector"
+                        v-show="false"
+                        accept="image/png, image/jpeg">
+
+                        <button class="btn btn-primary"
+                        v-if="usuario.uID"
+                            @click="onPressImage"> <!--? Esta funcion llama a la referencia del boton de arriba para seleccionar imagenes -->
+                            Subir foto
+                            <i class="fa fa-upload"></i>
+                        </button>
+                    </div>
+
+
 
                     <!--<div class="col-md-12">
                             <label class="labels">Address Line 2</label>
@@ -145,12 +166,17 @@
 import { mapState, mapActions } from 'vuex';
 import Swal from "sweetalert2";
 
+import uploadImage from '../helpers/uploadImage'
+
+
 export default {
     data() {
         return {
             passwordOld: "",
             passwordNew: "",
-            passwordConfirm: ""
+            passwordConfirm: "",
+            localImage: null,
+            file: null,
         }
     },
     computed: {
@@ -175,15 +201,28 @@ export default {
                 allowOutsideClick: false,
             });
 
-            if (this.passwordOld === "" || this.passwordOld === "") {
+            const picture = await uploadImage(this.file) //? subir foto al back, base de datos
+
+            this.file = null
+
+            if (this.passwordOld === "" || this.passwordOld === null) {            
                 
                 //! nos quedamos en el envio de datos en la action para cambiar los valores del usuario
 
                 objUsuario.nombre = this.usuario.nombre
                 objUsuario.correo = this.usuario.correo                
-                objUsuario.password = undefined
+                objUsuario.passwordOld = undefined                 
 
                 const resp = await this.updateUSerAccount(objUsuario)
+
+                if(resp != true){
+                    await Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `Hubo un error al guardar tus datos`,
+                    });
+                    return
+                }
 
 
                 Swal.fire("Cambios gaurdados", "", "success");
@@ -194,11 +233,20 @@ export default {
                 objUsuario.nombre = this.usuario.nombre
                 objUsuario.correo = this.usuario.correo
                 objUsuario.passwordNew = this.passwordNew
-                objUsuario.passwordOld = this.passwordOld
+                objUsuario.passwordOld = this.passwordOld                
                 const resp = await this.updateUSerAccount(objUsuario)
 
+                if(resp != true){
+                    await Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `Hubo un error al guardar tus datos`,
+                    });
+                    return
+                }
 
                 Swal.fire("Cambios gaurdados", "", "success");
+                return
             } else {
                 await Swal.fire({
                     icon: "error",
@@ -207,6 +255,31 @@ export default {
                 });
                 return
             }
+        },
+
+
+        onSelectdImage($event){
+            const file = $event.target.files[0]
+            
+            if (!file){
+
+                this.localImage = null
+                this.file = null
+                return
+            }
+
+            this.file = file
+
+            const fr = new FileReader()
+
+            fr.onload = () => this.localImage = fr.result //? Establece la imagen en el local
+            fr.readAsDataURL(file)            
+
+
+        },
+
+        onPressImage(){
+            this.$refs.imageSelector.click() //? Se busca una referencia para lanzar la seleccion de archivos
         }
     }
 }
