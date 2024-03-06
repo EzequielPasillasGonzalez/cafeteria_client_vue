@@ -150,11 +150,32 @@ export const processPayment = async ({commit}, order) => {
         const response = await cafeteriaApi.post('/api/paypal/create', order);
 
         window.open(response.data.body.links[1].href, "_blank");        
-
-        console.log(response);
+        
 
         return response.data;
     } catch(error) {
         return  error;
     }
+};
+
+export const verifyOrderPaypal = async ({commit}, id) => {
+    // Configura los datos para la solicitud
+try {
+     // Realiza la solicitud POST a la URL '/process_payment' con los datos
+    const {data} = await cafeteriaApi.get(`/api/paypal/getOrder/${id}`);    
+
+    const {body} = data
+
+    const {status} = body
+    
+
+    if(status === 'APPROVED'){        
+        return true;
+    }else{
+        return false;
+    }
+        
+} catch(error) {
+    return  error;
+}
 };

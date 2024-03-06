@@ -24,7 +24,7 @@
         </div>
 
         
-        <Landing/>
+        <LandingPage/>
     </div>
 </template>
 
@@ -43,7 +43,8 @@ export default {
   },
   components: {
     NavBar: defineAsyncComponent(() => import('@/modules/products/components/NavBar_Component.vue')),
-    Landing: defineAsyncComponent(() => import('@/views/Landing_Views.vue')),
+    // Landing: defineAsyncComponent(() => import('@/views/Landing_Views.vue')),
+    LandingPage: defineAsyncComponent(() => import('@/views/LandingPage_View.vue')),
   }
 }
 </script>

@@ -27,8 +27,8 @@
                         <div class="mb-3 row">
                             <label for="inputPassword" class="col-sm-2 col-form-label">Nombre</label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="inputPassword" v-model="nombre"
-                                    autocomplete="off">
+                                <input type="text" class="form-control" id="inputPassword" v-model="nombre"
+                                    autocomplete="off" required>
                             </div>
                         </div>
 
@@ -36,7 +36,7 @@
                             <label for="inputPassword" class="col-sm-2 col-form-label">Correo eléctronico</label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="inputPassword" v-model="correo"
-                                    autocomplete="off">
+                                    autocomplete="off" required>
                             </div>
                         </div>
 
@@ -44,7 +44,7 @@
                             <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña</label>
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" id="inputPassword" v-model="password"
-                                    autocomplete="off">
+                                    autocomplete="off" required>
                             </div>
                         </div>
 
@@ -52,7 +52,7 @@
                             <label for="inputPassword" class="col-sm-2 col-form-label">Confirma tu contraseña</label>
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" id="inputPassword" v-model="passwordConfirm"
-                                    autocomplete="off">
+                                    autocomplete="off" required>
                             </div>
                         </div>
 
@@ -105,7 +105,8 @@ export default {
 
             Swal.showLoading()
 
-            this.user.correo = this.correo
+            if(this.verifyPassword && this.verifyPassword !== null){
+                this.user.correo = this.correo
             this.user.password = this.password
             this.user.nombre = this.nombre
 
@@ -118,6 +119,7 @@ export default {
                 Swal.fire('Registro exitoso', '', 'success')
 
                 this.$router.push({ name: 'products' })
+                
             } else {
 
                 const { response } = ok
@@ -126,9 +128,23 @@ export default {
                 await Swal.fire({
                     icon: "error",
                     title: "Oops...",
-                    text: `${body}`,
+                    text: `${data}`,
+                });
+
+                return
+            }
+            }else{
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Hubo un error al guardar tus datos`,
                 });
             }
+
+            
+        
+
+            
         },        
         async googleSign(response){   
             

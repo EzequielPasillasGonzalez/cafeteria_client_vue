@@ -26,7 +26,13 @@
                     <div class="p-2 bd-highlight">                        
                         <button @click="gotToPaypal(order)" class="btn btn-primary">Paypal</button>
                     </div>
-                </div>                
+                </div>    
+                
+                <div v-if="isPaidPaypal" class="d-flex flex-row-reverse bd-highlight">
+                    <div class="p-2 bd-highlight">                        
+                        <button @click="getOrderPaypal(order)" class="btn btn-primary">Verificar compra paypal</button>
+                    </div>
+                </div>  
                 
 
             </div>
@@ -60,6 +66,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { defineAsyncComponent } from 'vue'
+import Swal from "sweetalert2";
 
 export default {
 
@@ -69,13 +76,16 @@ export default {
     },
     data(){
         return{
-            pedidosHechos: null
+            pedidosHechos: null,
+            idOrderPayPal: null,
+            isPaidPaypal: false
         }
     },
 
     computed: {        
         ...mapState('orderStore', {
-            order: 'order'
+            order: 'order',
+            uID: 'uID', 
         }),
         ...mapState('authStore', {
             usuario: 'usuario'
@@ -89,16 +99,89 @@ export default {
             }
         },        
         async gotToPaypal(order){
-            const resp = await this.processPayment(order)   
-            console.log(resp);
+            const {body } = await this.processPayment(order)   
+            const {id} = body
+            this.idOrderPayPal = id
+            this.isPaidPaypal = true
+        },
+        async getOrderPaypal(order){
+            if(this.idOrderPayPal !== null){
+                new Swal({
+                    //? Mostrar alertas
+                    title: "Espere por favor",
+                    allowOutsideClick: false,
+                });
+
+                Swal.showLoading();
+                const resp = await this.verifyOrderPaypal(this.idOrderPayPal)                   
+                if(resp === true){
+                    Swal.fire("Pago confirmado", "", "success");
+                    this.makeAnOrder(order)
+                }else{
+                    Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `El pago aun no ha sido aprovado`,
+                });
+                }
+
+                
+            }
+            
+        },
+        async makeAnOrder(order){            
+
+            new Swal({
+                //? Mostrar alertas
+                title: "Espere por favor",
+                allowOutsideClick: false,
+            });
+
+            Swal.showLoading();
+
+            if(this.uID == '' || this.uID == null){
+                await Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `Es necesario que inicies sesión`,
+                });
+
+                return
+            }
+            
+            try {                  
+                const resp = await this.makeOrder(order)
+
+                const data = await this.updateOrderUSer(resp)
+
+                Swal.fire("¡Pedido creado con éxito!", "", "success");  
+                
+                this.$router.push({name: 'products'})
+                
+            } catch(error) {
+            
+                await Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: `${error}`,
+                });
+            }            
+
+
         },
 
         ...mapActions("orderStore", [
             "setItemsLocalStorage",
             "loadOrder",
-            "processPayment"
+            "processPayment",
+            "verifyOrderPaypal",
+            'makeOrder'
         ]
         ),      
+        ...mapActions("authStore", [
+            'updateOrderUSer',
+            'setUserStorage'            
+        ]),
         
         async getOrders(){
             
@@ -116,7 +199,13 @@ export default {
     created(){        
         this.getOrder(),
         this.getOrders()
-    },
+    },   
+    watch: {
+        uID(){ 
+             //? Actualiza el view cuando el usuario pulsa otro producto
+            this.setUserStorage()
+        }
+    }
 }
 </script>
 
