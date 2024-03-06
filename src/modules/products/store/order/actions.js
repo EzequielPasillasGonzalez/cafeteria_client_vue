@@ -142,3 +142,19 @@ export const loadOrder = async ({commit}, orderList) => {
         
     }
 }
+
+export const processPayment = async ({commit}, order) => {
+        // Configura los datos para la solicitud
+    try {
+         // Realiza la solicitud POST a la URL '/process_payment' con los datos
+        const response = await cafeteriaApi.post('/api/paypal/create', order);
+
+        window.open(response.data.body.links[1].href, "_blank");        
+
+        console.log(response);
+
+        return response.data;
+    } catch(error) {
+        return  error;
+    }
+};

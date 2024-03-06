@@ -22,6 +22,6 @@ export default {
             name: 'profile',    
             component: () => import(/* webpackChunckName: "profile" */ '../views/perfilView.vue'),
 
-        },
+        },        
     ]
 }

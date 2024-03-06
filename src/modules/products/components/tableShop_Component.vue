@@ -21,6 +21,12 @@
                         <a class="btn btn-secondary" @click="$emit('pay', order)">Pagar</a>
                     </div>
                 </div>
+
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <div class="p-2 bd-highlight">                        
+                        <button @click="gotToPaypal(order)" class="btn btn-primary">Paypal</button>
+                    </div>
+                </div>                
                 
 
             </div>
@@ -82,10 +88,15 @@ export default {
                 this.setItemsLocalStorage()
             }
         },        
+        async gotToPaypal(order){
+            const resp = await this.processPayment(order)   
+            console.log(resp);
+        },
 
         ...mapActions("orderStore", [
             "setItemsLocalStorage",
-            "loadOrder"
+            "loadOrder",
+            "processPayment"
         ]
         ),      
         
@@ -105,7 +116,7 @@ export default {
     created(){        
         this.getOrder(),
         this.getOrders()
-    }
+    },
 }
 </script>
 
