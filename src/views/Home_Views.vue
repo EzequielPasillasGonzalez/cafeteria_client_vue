@@ -3,7 +3,7 @@
 
       <NavBar/>
 
-        <div class="row mt-5">
+        <!-- <div class="row mt-5">
 
           <div class="container">
             <h1>Bienvenido a Cefeteria Vue</h1> 
@@ -21,7 +21,7 @@
             </div>
           </div>
 
-        </div>
+        </div> -->
 
         
         <LandingPage/>

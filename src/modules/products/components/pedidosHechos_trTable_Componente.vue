@@ -1,14 +1,13 @@
 <template>
-    <br>
-    <p>Pedido:</p> 
-    <template v-for="product in order" :key="product.id">
-            <tr>
+    <br>          
+    <template v-for="(product, index) in order" :key="product.id">
+            <tr>                
+                <p>{{ index +1 }}</p>
                 <th scope="row">{{ product.id }}</th>
                 <td>{{ product.name }}</td>
                 <td>{{ product.precio }}</td>
-            </tr>
+            </tr>            
     </template>  
-    
 </template>
 
 <script>
@@ -23,7 +22,5 @@ export default {
 </script>
 
 <style scoped>
-p{
-    margin-right: 80%;
-}
+
 </style>

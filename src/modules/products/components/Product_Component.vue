@@ -12,11 +12,11 @@
             <div class="container">
 
                 <div class="row g-2">
-                    <div class="col-6">
+                    <div class="col-4">
                         <a class="btn btn-primary" @click="$emit('selection', {showProduct: true, product: product.id})">Mostrar</a>
                     </div>
 
-                    <div class="col-6">
+                    <div class="col-8">
                         <a class="btn btn-secondary" @click="$emit('order', product.id)">Ordenar</a>
                     </div>
                 </div>

@@ -16,23 +16,39 @@
                     </tbody>
                 </table>
 
-                <div class="d-flex flex-row-reverse bd-highlight">
-                    <div class="p-2 bd-highlight">                        
-                        <a class="btn btn-secondary" @click="$emit('pay', order)">Pagar</a>
+                <div class="container" style="margin-left: 40%;">
+                    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+                        <div class="col">
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <div class="p-2 bd-highlight">                        
+                                    <a class="btn btn-secondary" @click="$emit('pay', order)">Pagar</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="d-flex flex-row-reverse bd-highlight">
+                                <div class="p-2 bd-highlight">                        
+                                    <button @click="gotToPaypal(order)" class="btn btn-primary">Paypal</button>
+                                </div>
+                            </div>    
+                        </div>
+
+                        <div class="col">
+                            <div v-if="isPaidPaypal" class="d-flex flex-row-reverse bd-highlight">
+                                <div class="p-2 bd-highlight">                        
+                                    <button @click="getOrderPaypal(order)" class="btn btn-primary">Verificar compra paypal</button>
+                                </div>
+                            </div>  
+                        </div>
                     </div>
                 </div>
 
-                <div class="d-flex flex-row-reverse bd-highlight">
-                    <div class="p-2 bd-highlight">                        
-                        <button @click="gotToPaypal(order)" class="btn btn-primary">Paypal</button>
-                    </div>
-                </div>    
                 
-                <div v-if="isPaidPaypal" class="d-flex flex-row-reverse bd-highlight">
-                    <div class="p-2 bd-highlight">                        
-                        <button @click="getOrderPaypal(order)" class="btn btn-primary">Verificar compra paypal</button>
-                    </div>
-                </div>  
+
+
+                
+               
                 
 
             </div>
@@ -46,13 +62,14 @@
                 <table class="table table-hover">
                     <thead>
                       <tr>
+                        <th scope="col"></th>
                         <th scope="col">#ID</th>
                         <th scope="col">Nombre del produto</th>
                         <th scope="col">Precio $</th>                
                       </tr>
                     </thead>
                     <tbody>              
-                        <pedidosHechos v-for="product in pedidosHechos" :key="product.id" :order="product"/>              
+                        <pedidosHechos v-for="(product) in pedidosHechos" :key="product.id" :order="product"/>              
                     </tbody>
                 </table>
 
@@ -99,7 +116,7 @@ export default {
             }
         },        
         async gotToPaypal(order){
-            const {body } = await this.processPayment(order)   
+            const {body} = await this.processPayment(order)               
             const {id} = body
             this.idOrderPayPal = id
             this.isPaidPaypal = true
