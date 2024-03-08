@@ -16,7 +16,7 @@
         </li>
         <li class="one_third">
           <div class="block clear"><i class="fas fa-envelope"></i> <span><strong>Envíanos un correo:</strong> ingepasillasg@gmail.com</span></div>
-        </li>
+        </li> 
         <li class="one_third">
           <div class="block clear"><i class="fas fa-clock"></i> <span><strong> Lun. - Sab.:</strong> 08.00am - 18.00pm</span></div>
         </li>
