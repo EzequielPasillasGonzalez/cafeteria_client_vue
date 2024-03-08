@@ -99,7 +99,7 @@ export default {
   watch: {
     showProduct(newValue) {
       // Este código se ejecutará cuando cambie la propiedad 'showProduct'
-      console.log('showProduct ha cambiado:', newValue);
+      //console.log('showProduct ha cambiado:', newValue);
     },
     mounted() {
       this.loadProducts()

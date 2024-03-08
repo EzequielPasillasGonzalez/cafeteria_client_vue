@@ -111,7 +111,7 @@ export default {
     },
     methods: {
         getOrder(){
-            console.log(this.order);
+            //console.log(this.order);
             if(this.order == null || this.order.length === 0){
                 this.setItemsLocalStorage()
             }

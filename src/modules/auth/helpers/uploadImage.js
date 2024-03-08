@@ -25,7 +25,7 @@ const uploadImage = async ( file ) => {
 
         const resp = await cafeteriaApi.put(`/api/uploads/usuarios/${uID}`, formData, config)        
 
-        console.log(resp);
+        //console.log(resp);
 
         return true
 
@@ -33,7 +33,7 @@ const uploadImage = async ( file ) => {
 
     } catch (error) {
         console.error('Error al cargar imagen, revisar logs');
-        console.log(error);
+        //console.log(error);
 
         return null
     }
