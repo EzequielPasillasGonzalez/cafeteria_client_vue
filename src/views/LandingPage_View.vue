@@ -83,7 +83,7 @@
     <!-- ################################################################################################ -->
     <article>
       <p>Bienvenido</p>
-      <h3 class="heading">Cefeteria Vue</h3>
+      <h3 class="heading">Cafeteria Vue</h3>
       <p>El lugar donde satisfacemos tu paladar</p>
       <footer><a class="btn" @click="gotToProducts">Conoce nuestros productos <i class="fas fa-angle-right"></i></a></footer>
     </article>
