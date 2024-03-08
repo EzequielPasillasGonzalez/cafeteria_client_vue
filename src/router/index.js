@@ -35,12 +35,11 @@ const routes = [
     name: 'shopping',    
     component: () => import(/* webpackChunckName: "shopping" */ '../modules/products/layouts/Shop_Layout.vue'),            
   },
-  {
-    path: '/mercadoPago',
-    name: 'mercadoPago',    
-    component: () => import(/* webpackChunckName: "mercadoPago" */ '../modules/products/layouts/mercadoPago_Layout.vue'),
-
-},     
+  // {
+  //   path: '/mercadoPago',
+  //   name: 'mercadoPago',    
+  //   component: () => import(/* webpackChunckName: "mercadoPago" */ '../modules/products/layouts/mercadoPago_Layout.vue'),
+  // },     
 ]
 
 const router = createRouter({

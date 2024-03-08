@@ -111,12 +111,13 @@ export default {
     },
     methods: {
         getOrder(){
-            if(this.order.length === 0){
+            console.log(this.order);
+            if(this.order == null || this.order.length === 0){
                 this.setItemsLocalStorage()
             }
         },        
         async gotToPaypal(order){
-            const {body} = await this.processPayment(order)               
+            const {body} = await this.processPayment(order)                        
             const {id} = body
             this.idOrderPayPal = id
             this.isPaidPaypal = true
@@ -216,7 +217,11 @@ export default {
     created(){        
         this.getOrder(),
         this.getOrders()
-    },   
+    },  
+    mounted(){        
+        this.getOrder(),
+        this.getOrders()
+    },  
     watch: {
         uID(){ 
              //? Actualiza el view cuando el usuario pulsa otro producto

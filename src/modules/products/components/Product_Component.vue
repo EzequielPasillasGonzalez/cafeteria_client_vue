@@ -11,8 +11,8 @@
             
             <div class="container">
 
-                <div class="row g-2">
-                    <div class="col-4">
+                <div class="row mx-auto ps-4">
+                    <div class="col-8">
                         <a class="btn btn-primary" @click="$emit('selection', {showProduct: true, product: product.id})">Mostrar</a>
                     </div>
 

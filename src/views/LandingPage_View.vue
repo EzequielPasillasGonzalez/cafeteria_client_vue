@@ -7,7 +7,7 @@
   <header id="header" class="hoc clear"> 
     <!-- ################################################################################################ -->
     <div id="logo" class="one_quarter first">
-      <h1><a href="index.html"><span>C</span>afeteria<span>V</span>ue</a></h1>
+      <h1><a  @click="$router.push({name: 'home'})"><span>C</span>afeteria<span>V</span>ue</a></h1>
     </div>
     <div class="three_quarter">
       <ul class="nospace clear">
@@ -15,10 +15,10 @@
           <div class="block clear"><i class="fas fa-phone"></i> <span><strong>Marcanos:</strong> +00 (123) 456 7890</span></div>
         </li>
         <li class="one_third">
-          <div class="block clear"><i class="fas fa-envelope"></i> <span><strong>Send us a mail:</strong> ingepasillasg@gmail.com</span></div>
+          <div class="block clear"><i class="fas fa-envelope"></i> <span><strong>Envíanos un correo:</strong> ingepasillasg@gmail.com</span></div>
         </li>
         <li class="one_third">
-          <div class="block clear"><i class="fas fa-clock"></i> <span><strong> Mon. - Sat.:</strong> 08.00am - 18.00pm</span></div>
+          <div class="block clear"><i class="fas fa-clock"></i> <span><strong> Lun. - Sab.:</strong> 08.00am - 18.00pm</span></div>
         </li>
       </ul>
     </div>

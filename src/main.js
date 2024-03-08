@@ -8,6 +8,7 @@ import 'bootstrap';
 
 
 import './styles/styles.scss'
+import './styles/framework.css'
 
 createApp(App)
     .use(store)
