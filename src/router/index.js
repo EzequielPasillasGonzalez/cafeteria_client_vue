@@ -35,6 +35,17 @@ const routes = [
     name: 'shopping',    
     component: () => import(/* webpackChunckName: "shopping" */ '../modules/products/layouts/Shop_Layout.vue'),            
   },
+  {
+    path: '/pedido/:idPedido',
+    name: 'show-pedido',    
+    component: () => import(/* webpackChunckName: "pedido-entry" */ '../modules/products/views/pedidoDesplegado_View.vue'),
+    props: (route) =>{ //? Se manda el id por los props para el Product-view                                
+        return {
+            
+            idPedido: route.params.idPedido                    
+        }                
+    }
+}, 
   // {
   //   path: '/mercadoPago',
   //   name: 'mercadoPago',    

@@ -143,6 +143,34 @@ export const loadOrder = async ({commit}, orderList) => {
     }
 }
 
+export const getOrder = async ({commit}, idOrder) => {
+    try {                
+            const {data} = await cafeteriaOrderApi.get(`/order/${idOrder}.json`, )
+
+            return data
+
+
+        }
+        catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export const getProduct = async ({commit}, idOrder) => {
+    try {                
+            const {data} = await cafeteriaApi.get(`/api/products/${idOrder}`, )
+
+            return data.body
+
+
+        }
+        catch (error) {
+        console.log(error);
+        
+    }
+}
+
 export const processPayment = async ({commit}, order) => {
         // Configura los datos para la solicitud
     try {

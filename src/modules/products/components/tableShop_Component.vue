@@ -61,15 +61,27 @@
                 <h1>Pedidos creados:</h1>                
                 <table class="table table-hover">
                     <thead>
-                      <tr>
-                        <th scope="col"></th>
-                        <th scope="col">#ID</th>
-                        <th scope="col">Nombre del produto</th>
-                        <th scope="col">Precio $</th>                
-                      </tr>
+                        <tr>                        
+                            <th scope="col">#ID del pedido</th>                                       
+                            <th scope="col">Nombre del comprador</th>                                       
+                            <th scope="col">Acción</th>                                       
+                        </tr>
                     </thead>
                     <tbody>              
-                        <pedidosHechos v-for="(product) in pedidosHechos" :key="product.id" :order="product"/>              
+                        <!-- <pedidosHechos v-for="(product) in pedidosHechos" :key="product.id" :order="product"/>               -->                                                
+                        <template v-for="product in pedidosHechos" :key="product.id">
+                                <tr>                                                    
+                                    <td>{{ product }}</td>
+                                    <td>{{usuario.nombre}}</td>
+                                    <td>
+                                        <button class="btn btn-outline-info mx-2" @click="goViewPedido(product)">
+                                            <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </td>
+                                    <!-- <td>{{ product.name }}</td>
+                                    <td>{{ product.precio }}</td> -->
+                                </tr>            
+                        </template>
                     </tbody>
                 </table>
 
@@ -89,11 +101,11 @@ export default {
 
     components: {
         trTable : defineAsyncComponent(() => import('../components/trTable_Componente.vue')),        
-        pedidosHechos : defineAsyncComponent(() => import('../components/pedidosHechos_trTable_Componente.vue')),        
+        // pedidosHechos : defineAsyncComponent(() => import('../components/pedidosHechos_trTable_Componente.vue')),        
     },
     data(){
         return{
-            pedidosHechos: null,
+            pedidosHechos: [],
             idOrderPayPal: null,
             isPaidPaypal: false
         }
@@ -105,7 +117,7 @@ export default {
             uID: 'uID', 
         }),
         ...mapState('authStore', {
-            usuario: 'usuario'
+            usuario: 'usuario',            
         }),
     
     },
@@ -116,6 +128,10 @@ export default {
                 this.setItemsLocalStorage()
             }
         },        
+        goViewPedido(idPedido){
+            //console.log(this.order);
+            this.$router.push({name: 'show-pedido', params: {idPedido: idPedido}})
+        },   
         async gotToPaypal(order){
             const {body} = await this.processPayment(order)                        
             const {id} = body
@@ -204,7 +220,17 @@ export default {
         async getOrders(){
             
             if(this.usuario.order){
-                this.pedidosHechos = await this.loadOrder(this.usuario.order)
+                // this.pedidosHechos = await this.loadOrder(this.usuario.order)                
+                
+                var lista = this.usuario.order.split(',');                
+                    
+                for (let index = 0; index < lista.length; index++) {
+                    const element = lista[index];                                                    
+                    if(element !== null){
+                        this.pedidosHechos.push(element)
+                    }
+                
+                }
             }
 
             // for (let index = 0; index < this.pedidosHechos.length; index++) {

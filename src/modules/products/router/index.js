@@ -17,6 +17,17 @@ export default {
                     
                 }                
             }
+        },     
+        {
+            path: 'pedido/:idPedido',
+            name: 'show-pedido',    
+            component: () => import(/* webpackChunckName: "pedido-entry" */ '../views/pedidoDesplegado_View.vue'),
+            props: (route) =>{ //? Se manda el id por los props para el Product-view                                
+                return {
+                    
+                    idPedido: route.params.idPedido                    
+                }                
+            }
         },           
     ]
 }
