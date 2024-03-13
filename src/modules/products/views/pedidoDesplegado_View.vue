@@ -68,8 +68,7 @@ export default {
             "getOrder",
         ]
         ),
-        exportPDF(){                                        
-            html2canvas(this.$refs.pdf).then((canvas) => {
+        exportPDF(){                                                    
                // Captura de pantalla de la imagen remota usando html2canvas
                 html2canvas(document.body, { useCORS: true }).then(canvas => {
                   // Crea un objeto jsPDF
@@ -83,12 +82,11 @@ export default {
                   // Obtiene los datos de la imagen capturada como base64
                 
                   // Agrega la imagen al PDF
-                  pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight); // ajusta las coordenadas y el tamaño según sea necesario
+                  pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, 0); // ajusta las coordenadas y el tamaño según sea necesario
                 
                   // Guarda o descarga el PDF
                   pdf.save('documento.pdf');
-                });
-            });
+                });            
         },
     },           
     async mounted(){
