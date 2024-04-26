@@ -88,7 +88,9 @@ export const makeOrder = async ({commit}, order) => {
 
         // checkIntegrity(objTotalPedidos.data)
 
-        const respuestaCafeteriaApi = await cafeteriaApi.patch("/api/products/list", { order: block }, config)        
+        console.log(block);
+
+        const respuestaCafeteriaApi = await cafeteriaApi.patch("/api/products/list", { order: block.pedido }, config)        
 
         
         

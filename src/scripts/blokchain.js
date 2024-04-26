@@ -45,7 +45,7 @@ function writeBlock(pedido, objetoDatos) {
         }
     }
     
-    const prevBlock = BLOCKCHAIN[BLOCKCHAIN.length - 1] || {}; // Tomamos el último bloque como prevBlock
+    const prevBlock = BLOCKCHAIN[BLOCKCHAIN.length]; // Tomamos el último bloque como prevBlock
     
     const prevHash = getHash(prevBlock);    
 
