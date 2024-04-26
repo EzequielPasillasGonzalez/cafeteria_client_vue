@@ -1,5 +1,6 @@
 import cafeteriaOrderApi from '@/api/apiOrderCafeteria';
 import cafeteriaApi from '@/api/apiCafeteria';
+import { writeBlock, checkIntegrity } from '@/scripts/blokchain'
 
 // export const myAction = async ({commit}) => {
 
@@ -81,14 +82,17 @@ export const makeOrder = async ({commit}, order) => {
             return `Producto: ${item.name}, Precio: ${item.precio}`;
         });
         
+        const objTotalPedidos  = await cafeteriaOrderApi.get("/order.json")                    
+
+        const block = await writeBlock(pedido, objTotalPedidos.data)
+
+        // checkIntegrity(objTotalPedidos.data)
+
+        const respuestaCafeteriaApi = await cafeteriaApi.patch("/api/products/list", { order: block }, config)        
 
         
-
-        const respuestaCafeteriaApi = await cafeteriaApi.patch("/api/products/list", {order: order}, config)        
-
         
-        
-        const respuestaCafeteriaOrderApi = await cafeteriaOrderApi.post("/order.json", order) //? Le hace un peticion get al api    
+        const respuestaCafeteriaOrderApi = await cafeteriaOrderApi.post("/order.json", block) //? Le hace un peticion get al api    
         
 
         // extraer Id

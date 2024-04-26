@@ -13,7 +13,7 @@ export const loadProducts = async ({ commit }) => {
     const { product } = body
 
     const products = [] //? Se inicializa una lista para guaradar la data de la peticion
-
+        
     for( let id of Object.keys(product) ){ //? Se va guardando los datos en la lista        
         products.push({
             id, //? Se guardar el id
